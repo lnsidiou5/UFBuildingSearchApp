@@ -52,11 +52,6 @@ th {
   margin: 2px;
   border-radius: 3px;
 }
-td:hover {
-  position: left;
-  cursor: pointer;
-  background-color: #ddd;
-}
 
 /* ###### Icons ########*/
 .icon {

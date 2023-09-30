@@ -23,14 +23,20 @@ function AddBuilding({ addBuilding }) {
       )
     ) {
       msg = "Invalid Name, was empty or contained invalid characters";
+    } else if (
+      /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/.test(
+        address.current.value
+      )
+    ) {
+      msg = "Invalid Address, contained invalid characters";
     } else if (latitude.current.value != "" || longitude.current.value != "") {
       // make sure we have both values
       if (latitude.current.value == "" || longitude.current.value == "") {
         msg = "If including coordinates, must include both";
       } else {
         msg =
-          /^[-]?[1-9]*$/.test(latitude.current.value) &&
-          /^[-]?[1-9]*$/.test(longitude.current.value)
+          /^[-]?[1-9]{1,}$/.test(latitude.current.value) &&
+          /^[-]?[1-9]{1,}$/.test(longitude.current.value)
             ? addBuilding({
                 id: id.current.value,
                 code: code.current.value,
@@ -41,7 +47,7 @@ function AddBuilding({ addBuilding }) {
                 },
                 address: address.current.value,
               })
-            : "Invalid characters in coordinates";
+            : "Invalid coordinates";
       }
     } else {
       msg = addBuilding({
@@ -59,43 +65,105 @@ function AddBuilding({ addBuilding }) {
   }
 
   return (
-    <div>
-      <form className="row g-3 needs-validation">
-        <div className="col-md-4">
-          <label className="form-label">ID: &nbsp;</label>
-          <input type="text" placeholder="Required" ref={id} />
+    <div
+      className="rounded"
+      style={{ paddingTop: "1px", background: "#DEDEDE" }}
+    >
+      <form className="group g-3" style={{ marginLeft: "8px" }}>
+        <div className="row">
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">ID: &nbsp;</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Required"
+                ref={id}
+              />
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">Code: &nbsp;</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Required"
+                ref={code}
+              />
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">Name: &nbsp;</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Required"
+                ref={name}
+              />
+            </div>
+          </div>
         </div>
-        <div className="col-md-4">
-          <label className="form-label">Code: &nbsp;</label>
-          <input type="text" placeholder="Required" ref={code} />
-        </div>
-        <div className="col-md-4">
-          <label className="form-label">Name: &nbsp;</label>
-          <input type="text" placeholder="Required" ref={name} />
-        </div>
-        <div className="col-md-4">
-          <label className="form-label">Coordinates: &nbsp;</label>
-          <input type="text" placeholder="Latitude" ref={latitude} />
-          <span></span>
-          <input type="text" placeholder="Longitude" ref={longitude} />
-        </div>
-        <div className="col-md-4">
-          <label className="form-label">Address: &nbsp;</label>
-          <input
-            type="text"
-            placeholder="1234 NW Bobcat Lane, St. Robert, MO, USA"
-            ref={address}
-          />
+        <div className="row">
+          <div className="col">
+            <label className="form-label">Coordinates: &nbsp;</label>
+
+            <div className="row" style={{ margin: 0 }}>
+              <div className="col" style={{ paddingLeft: 0, paddingRight: 4 }}>
+                <input
+                  type="text"
+                  className="form-control col"
+                  placeholder="Latitude"
+                  ref={latitude}
+                />
+              </div>
+              <span
+                className="col-sm-6"
+                style={{ width: "4px", padding: 0, paddingTop: 12 }}
+              >
+                ,
+              </span>
+              <div className="col" style={{ paddingLeft: 4 }}>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Longitude"
+                  ref={longitude}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <label className="form-label">Address: &nbsp;</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="1234 NW Bobcat Lane, St. Robert, MO, USA"
+              ref={address}
+            />
+          </div>
         </div>
       </form>
-      <button
-        className="button"
-        onClick={() => {
-          handleSubmit();
-        }}
-      >
-        Add Building
-      </button>
+      <div className="row">
+        <div>
+          <button
+            className="btn"
+            onClick={() => {
+              handleSubmit();
+            }}
+            style={{
+              marginTop: "0px",
+              marginLeft: "8px",
+              background: "blue",
+              color: "white",
+            }}
+          >
+            <i className="bi bi-plus" />
+            Add Building
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

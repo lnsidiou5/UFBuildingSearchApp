@@ -73,15 +73,35 @@ function App({ listing }) {
       {/* TODO: Edit Search component to include necessary props */}
       <div className="bg">
         <Search filterUpdate={filterUpdate} />
-        <button
-          className="btn btn-secondary dropdown-toggle"
-          style={{ margin: "1rem" }}
-          onClick={() => {
-            toggleShow();
-          }}
-        >
-          Add New Building
-        </button>
+        {!show ? (
+          <button
+            className="btn btn-secondary"
+            style={{ margin: "1rem", marginBottom: "0" }}
+            onClick={() => {
+              toggleShow();
+            }}
+          >
+            Add New Building
+            <i
+              className="bi bi-caret-down-fill"
+              style={{ marginLeft: "4.08px" }}
+            ></i>
+          </button>
+        ) : (
+          <button
+            className="btn btn-secondary"
+            style={{ margin: "1rem", marginBottom: "0" }}
+            onClick={() => {
+              toggleShow();
+            }}
+          >
+            Add New Building
+            <i
+              className="bi bi-caret-up-fill"
+              style={{ marginLeft: "4.08px" }}
+            ></i>
+          </button>
+        )}
         {show ? <AddBuilding addBuilding={addData} /> : <></>}
         <main>
           <div className="row">
